@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>P2P</artifactId>
+		<groupId>com._163.king13zhi</groupId>
+		<version>1.0.0</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>mgrsite</artifactId>
+	<packaging>war</packaging>
+
+	<dependencies>
+		<!--web连接的包-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!--freemarker的包-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
+		<!--????什么用的包?-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+		<!--core项目想在相当于一个jar包,直接引用使用-->
+		<dependency>
+			<groupId>com._163.king13zhi</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+
+</project>
