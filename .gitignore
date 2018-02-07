@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+/website/target/
+/core/target/
+/mgrsite/target/
+/core/src/test/
+/mgrsite/src/test/
+/website/src/test/

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com._163.king13zhi.p2p.base.mapper.SystemMenuMapper">
+	<resultMap id="BaseResultMap" type="com._163.king13zhi.p2p.base.domain.SystemMenu">
+		<id column="id" property="id"/>
+		<result column="text" property="text"/>
+		<result column="iconCls" property="iconCls"/>
+		<result column="url" property="url"/>
+		<result column="parent_id" property="parent_id"/>
+
+	</resultMap>
+	<delete id="deleteByPrimaryKey">
+		delete from `systemmenu`
+		where id = #{id}
+	</delete>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into `systemmenu` (text, iconCls, url, parent_id)
+		values (#{text}, #{iconCls}, #{url}, #{parent_id})
+	</insert>
+	<update id="updateByPrimaryKey">
+		update `systemmenu`
+		set text = #{text},
+		iconCls = #{iconCls},
+		url = #{url},
+		parent_id = #{parent_id}
+		where id = #{id}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		select id, text, iconCls, url, parent_id
+		from `systemmenu`
+		where id = #{id}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, text, iconCls, url, parent_id
+		from `systemmenu`
+	</select>
+	<select id="selectMenuByParentId" resultMap="BaseResultMap">
+		select id ,text, iconCls, url ,parent_id
+		from systemmenu
+		where
+		<if test="parentId != null">
+			parent_id = #{parentId}
+		</if>
+		<if test="parentId == null">
+			parent_id is null
+		</if>
+
+
+	</select>
+</mapper>
