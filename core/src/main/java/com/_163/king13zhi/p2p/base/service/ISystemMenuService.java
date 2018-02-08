@@ -1,6 +1,7 @@
 package com._163.king13zhi.p2p.base.service;
 
 import com._163.king13zhi.p2p.base.domain.SystemMenu;
+import com._163.king13zhi.p2p.base.query.SystemMenuQueryObject;
 
 import java.util.List;
 
@@ -13,6 +14,6 @@ public interface ISystemMenuService {
 	 * @param parentId
 	 * @return
 	 */
-	List<SystemMenu> loadMenuByParentIdIsNull(Long parentId);
+	List<SystemMenu> loadMenuByParentIdIsNull(SystemMenuQueryObject qo);
 
 }

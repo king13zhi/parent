@@ -11,11 +11,11 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @EnableAutoConfiguration
 @SpringBootApplication
 @ComponentScan
-/*@PropertySources({
-		*//*@PropertySource("classpath:application-core.properties"),*//*
+@PropertySources({
+		@PropertySource("classpath:application-core.properties"),
 		@PropertySource("classpath:email.properties"),
 		@PropertySource("classpath:msg.properties") //applciation.properties只可以唯一,所以如果使用别的名字可以这样改
-		})*/
+		})
 @MapperScan({"com._163.king13zhi.p2p.base.mapper","com._163.king13zhi.p2p.business.mapper"})//扫描Mapper接口包
 public class CoreConfig {
 	//解析${}表达式,static 优先于对象创建

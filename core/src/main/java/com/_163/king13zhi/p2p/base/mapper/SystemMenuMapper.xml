@@ -34,17 +34,22 @@
 		select id, text, iconCls, url, parent_id
 		from `systemmenu`
 	</select>
+
+	<sql id="conditionSql">
+		<where>
+			<if test="parentId != null">
+				and parent_id = #{parentId}
+			</if>
+			<if test="parentId == null">
+				and parent_id is null
+			</if>
+		</where>
+	</sql>
+
+	<!--动态加载菜单树-->
 	<select id="selectMenuByParentId" resultMap="BaseResultMap">
 		select id ,text, iconCls, url ,parent_id
 		from systemmenu
-		where
-		<if test="parentId != null">
-			parent_id = #{parentId}
-		</if>
-		<if test="parentId == null">
-			parent_id is null
-		</if>
-
-
+		<include refid="conditionSql"/>
 	</select>
 </mapper>

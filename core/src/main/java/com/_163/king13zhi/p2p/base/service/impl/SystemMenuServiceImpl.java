@@ -2,6 +2,7 @@ package com._163.king13zhi.p2p.base.service.impl;
 
 import com._163.king13zhi.p2p.base.domain.SystemMenu;
 import com._163.king13zhi.p2p.base.mapper.SystemMenuMapper;
+import com._163.king13zhi.p2p.base.query.SystemMenuQueryObject;
 import com._163.king13zhi.p2p.base.service.ISystemMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class SystemMenuServiceImpl implements ISystemMenuService {
 	private SystemMenuMapper systemmenuMapper;
 
 	@Override
-	public List<SystemMenu> loadMenuByParentIdIsNull(Long parentId) {
-		return systemmenuMapper.selectMenuByParentId(parentId);
+	public List<SystemMenu> loadMenuByParentIdIsNull(SystemMenuQueryObject qo) {
+		return systemmenuMapper.selectMenuByParentId(qo);
 	}
 
 
