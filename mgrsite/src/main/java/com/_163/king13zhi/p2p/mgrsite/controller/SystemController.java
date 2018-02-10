@@ -60,8 +60,10 @@ public class SystemController {
 				urlMap.put("url",ele.getUrl());
 				eleMap.put("attributes", urlMap);
 			}
+			System.out.println(eles.toString());
 			map.put("children", eles);
 		}
+		System.out.println(roots.toString());
 		return roots;
 	}
 }

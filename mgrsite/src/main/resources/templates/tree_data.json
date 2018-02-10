@@ -1,0 +1,19 @@
+[{
+  "id":1,
+  "text":"员工管理",
+  "iconCls":"icon-save",
+  "checked":true,
+  "state":"closed",
+  "attributes":{
+    "url":"employee.html"
+  }
+},{
+  "id":2,
+  "text":"部门管理",
+  "iconCls":"icon-save",
+  "checked":true,
+  "state":"open",
+  "attributes":{
+    "url":"department.html"
+  }
+}]
