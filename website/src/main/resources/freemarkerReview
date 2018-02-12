@@ -1,0 +1,200 @@
+1，FreeMarker中的模型：hash（如map或自定义对象）；scalars（存储的简单值）；sequence（数组或者列表等可遍历对象）；
+2，FreeMarker模板中的内容分类：
+1，插值；${}   如果在freemarker中找不到插值就会报错
+2，FTL指令；<#xxx></#xxx>
+3，注释：<#-- -->
+4，标准文本，除了以上三种，其他都是静态文本，原样输出；
+3，插值的使用：
+	1，直接输出scalars；${someValue}
+	2，处理不存在的scalars值：${something!"nothing"}
+	3，输出hash中的属性：${someBean.someValue}
+	4，输出hash中的方法；${someBean.someMethod()}
+	5，处理不存在的hash调用：${(obj.prop.something)!nothing}
+    ${str?xxxx(x,x)}
+    ${date?string("yyyy-MM-dd HH:mm:ss")}
+    ${bigdecimal?string("#.00")}
+6，处理scalars的内建函数：${str?substring(2)}等
+4，常见的FTL指令：
+	1，<#if xxx<xxx>..<#elseif>..<#else>..</#if>
+         <#if bean?? ></#if>
+	2，<#list sequence as item>${item.username}</#list>
+
+	#include：引入一个模板；
+    #assign：在Freemarker上下文中创建一个变量并赋值；
+
+<!--配置freeMarker的模板路径 -->
+<bean
+    class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+    <!-- 配置freemarker的文件编码 -->
+    <property name="defaultEncoding" value="UTF-8" />
+    <!-- 配置freemarker寻找模板的路径 -->
+    <property name="templateLoaderPath" value="/WEB-INF/views/" />
+</bean>
+
+<!--freemarker视图解析器 -->
+<bean id="viewResolver"
+    class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+    <!-- 是否在model自动把session中的attribute导入进去; -->
+    <property name="exposeSessionAttributes" value="true" />
+    <!-- 配置逻辑视图自动添加的后缀名 -->
+    <property name="suffix" value=".ftl" />
+    <!-- 配置视图的输出HTML的contentType -->
+    <property name="contentType" value="text/html;charset=UTF-8" />
+</bean>
+
+
+==>  Preparing: select br.id, br.version, br.bidRequestType, br.bidRequestState, br.bidRequestAmount, br.currentRate, br.monthes2Return, br.bidCount, br.totalRewardAmount, br.currentSum, br.title, br.description, br.note, br.disableDate, br.createUser_id, br.disableDays, br.minBidAmount, br.applyTime, br.publishTime, br.returnType, cu.id cu_id,cu.username cu_username from `bidrequest` br join logininfo cu on br.createUser_id = cu.id where br.id = ?
+==> Parameters: 1(Long)
+ ====>  Preparing: select b.id, b.actualRate, b.availableAmount, b.bidRequestId, b.bidUser_id, b.bidTime, b.bidRequestTitle, b.bidRequestState , bu.id bu_id ,bu.username bu_username from `bid` b join logininfo bu on b.bidUser_id = bu.id where b.bidRequestId = ?
+2018-01-30 20:30:34.271 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.B.queryListByBidRequestId    : ====> Parameters: 1(Long)
+2018-01-30 20:30:34.275 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.B.queryListByBidRequestId    : <====      Total: 3
+2018-01-30 20:30:34.276 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.B.selectByPrimaryKey         : <==      Total: 1
+2018-01-30 20:30:34.286 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.B.insert                     : ==>  Preparing: insert into `bidrequestaudithistory` (state, remark, auditTime, applyTime, auditor_id, applier_id, bidRequestId, auditType) values (?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.287 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.B.insert                     : ==> Parameters: 1(Integer), xxxx(String), 2018-01-30 20:30:34.277(Timestamp), 2018-01-30 20:30:34.277(Timestamp), 2(Long), 1(Long), 1(Long), 2(Integer)
+2018-01-30 20:30:34.296 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.B.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.310 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.mapper.BidMapper.updateSate    : ==>  Preparing: update bid set bidRequestState = ? where bidRequestId = ?
+2018-01-30 20:30:34.311 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.mapper.BidMapper.updateSate    : ==> Parameters: 7(Integer), 1(Long)
+2018-01-30 20:30:34.313 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.mapper.BidMapper.updateSate    : <==    Updates: 3
+2018-01-30 20:30:34.323 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.selectByPrimaryKey         : ==>  Preparing: select id, tradePassword, usableAmount, freezedAmount, borrowLimit, version, unReceiveInterest, unReceivePrincipal, unReturnAmount, remainBorrowLimit from `account` where id = ?
+2018-01-30 20:30:34.324 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.selectByPrimaryKey         : ==> Parameters: 1(Long)
+2018-01-30 20:30:34.327 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.selectByPrimaryKey         : <==      Total: 1
+2018-01-30 20:30:34.338 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : ==>  Preparing: insert into `accountflow` (actionType, amount, remark, usableAmount, freezedAmount, tradeTime, accountId) values (?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.340 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : ==> Parameters: 2(Integer), 3000.0000(BigDecimal), 借款成功:3000.0000元(String), 3105.8706(BigDecimal), 0.0000(BigDecimal), 2018-01-30 20:30:34.337(Timestamp), 1(Long)
+2018-01-30 20:30:34.344 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : <==    Updates: 1
+2018-01-30 20:30:34.346 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : ==>  Preparing: insert into `accountflow` (actionType, amount, remark, usableAmount, freezedAmount, tradeTime, accountId) values (?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.347 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : ==> Parameters: 6(Integer), 150.0000(BigDecimal), 支付平台借款手续费:150.0000元(String), 3105.8706(BigDecimal), 0.0000(BigDecimal), 2018-01-30 20:30:34.346(Timestamp), 1(Long)
+2018-01-30 20:30:34.348 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : <==    Updates: 1
+2018-01-30 20:30:34.359 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.U.selectByPrimaryKey         : ==>  Preparing: select id, version, bitState, realName, idNumber, phoneNumber, score,email, incomeGrade_id, marriage_id, kidCount_id, educationBackground_id, houseCondition_id,realAuthId from `userinfo` where id = ?
+2018-01-30 20:30:34.359 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.U.selectByPrimaryKey         : ==> Parameters: 1(Long)
+2018-01-30 20:30:34.363 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : ====>  Preparing: select id, parentId, title, sequence from `systemdictionaryitem` where id = ?
+2018-01-30 20:30:34.363 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : ====> Parameters: 2(Long)
+2018-01-30 20:30:34.366 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : <====      Total: 1
+2018-01-30 20:30:34.366 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : ====>  Preparing: select id, parentId, title, sequence from `systemdictionaryitem` where id = ?
+2018-01-30 20:30:34.366 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : ====> Parameters: 6(Long)
+2018-01-30 20:30:34.367 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : <====      Total: 1
+2018-01-30 20:30:34.368 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : ====>  Preparing: select id, parentId, title, sequence from `systemdictionaryitem` where id = ?
+2018-01-30 20:30:34.368 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : ====> Parameters: 8(Long)
+2018-01-30 20:30:34.369 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : <====      Total: 1
+2018-01-30 20:30:34.370 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : ====>  Preparing: select id, parentId, title, sequence from `systemdictionaryitem` where id = ?
+2018-01-30 20:30:34.371 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : ====> Parameters: 20(Long)
+2018-01-30 20:30:34.374 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : <====      Total: 1
+2018-01-30 20:30:34.375 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : ====>  Preparing: select id, parentId, title, sequence from `systemdictionaryitem` where id = ?
+2018-01-30 20:30:34.375 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : ====> Parameters: 11(Long)
+2018-01-30 20:30:34.377 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectByPrimaryKey         : <====      Total: 1
+2018-01-30 20:30:34.377 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.U.selectByPrimaryKey         : <==      Total: 1
+2018-01-30 20:30:34.378 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.U.updateByPrimaryKey         : ==>  Preparing: update `userinfo` set version = version + 1, bitState = ?, realName = ?, score=?, idNumber = ?, phoneNumber = ?, email = ?, incomeGrade_id = ?, marriage_id = ?, realAuthId = ?, kidCount_id = ?, educationBackground_id = ?, houseCondition_id = ? where id = ?
+2018-01-30 20:30:34.379 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.U.updateByPrimaryKey         : ==> Parameters: 31(Long), 仅仅(String), 40(Integer), 420000000000000000000000(String), 13400000000(String), 123@66.com(String), 6(Long), 8(Long), 1(Long), 20(Long), 2(Long), 11(Long), 1(Long)
+2018-01-30 20:30:34.380 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.U.updateByPrimaryKey         : <==    Updates: 1
+2018-01-30 20:30:34.381 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.updateByPrimaryKey         : ==>  Preparing: update `account` set tradePassword = ?, usableAmount = ?, freezedAmount = ?, borrowLimit = ?, version = version + 1, unReceiveInterest = ?, unReceivePrincipal = ?, unReturnAmount = ?, remainBorrowLimit = ? where id = ? and version = ?
+2018-01-30 20:30:34.382 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.updateByPrimaryKey         : ==> Parameters: null, 2850.0000(BigDecimal), 0.0000(BigDecimal), 5000.0000(BigDecimal), 0.0000(BigDecimal), 0.0000(BigDecimal), 3105.8706(BigDecimal), 2000.0000(BigDecimal), 1(Long), 0(Integer)
+2018-01-30 20:30:34.383 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.updateByPrimaryKey         : <==    Updates: 1
+2018-01-30 20:30:34.383 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectCurrent              : ==>  Preparing: select id, version, usableAmount, freezedAmount from `systemaccount`
+2018-01-30 20:30:34.383 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectCurrent              : ==> Parameters:
+2018-01-30 20:30:34.385 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.selectCurrent              : <==      Total: 1
+2018-01-30 20:30:34.386 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.updateByPrimaryKey         : ==>  Preparing: update `systemaccount` set version = version + 1, usableAmount = ?, freezedAmount = ? where id = ?
+2018-01-30 20:30:34.387 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.updateByPrimaryKey         : ==> Parameters: 150.0000(BigDecimal), 0.0000(BigDecimal), 1(Long)
+2018-01-30 20:30:34.389 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.updateByPrimaryKey         : <==    Updates: 1
+2018-01-30 20:30:34.397 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.insert                     : ==>  Preparing: insert into `systemaccountflow` (actionTime, actionType, amount, remark, usableAmount, freezedAmount ) values (?, ?, ?, ?, ?, ? )
+2018-01-30 20:30:34.398 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.insert                     : ==> Parameters: 2018-01-30 20:30:34.397(Timestamp), 2(Integer), 150.0000(BigDecimal), 收取用户借款手续费: 150.0000元(String), 150.0000(BigDecimal), 0.0000(BigDecimal)
+2018-01-30 20:30:34.400 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.S.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.401 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.selectByPrimaryKey         : ==>  Preparing: select id, tradePassword, usableAmount, freezedAmount, borrowLimit, version, unReceiveInterest, unReceivePrincipal, unReturnAmount, remainBorrowLimit from `account` where id = ?
+2018-01-30 20:30:34.402 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.selectByPrimaryKey         : ==> Parameters: 3(Long)
+2018-01-30 20:30:34.403 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.selectByPrimaryKey         : <==      Total: 1
+2018-01-30 20:30:34.405 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : ==>  Preparing: insert into `accountflow` (actionType, amount, remark, usableAmount, freezedAmount, tradeTime, accountId) values (?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.407 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : ==> Parameters: 3(Integer), 1200.0000(BigDecimal), 投资成功:1200.0000元(String), 0.0000(BigDecimal), 600.0000(BigDecimal), 2018-01-30 20:30:34.404(Timestamp), 3(Long)
+2018-01-30 20:30:34.409 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : <==    Updates: 1
+2018-01-30 20:30:34.410 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.selectByPrimaryKey         : ==>  Preparing: select id, tradePassword, usableAmount, freezedAmount, borrowLimit, version, unReceiveInterest, unReceivePrincipal, unReturnAmount, remainBorrowLimit from `account` where id = ?
+2018-01-30 20:30:34.410 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.selectByPrimaryKey         : ==> Parameters: 4(Long)
+2018-01-30 20:30:34.412 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.selectByPrimaryKey         : <==      Total: 1
+2018-01-30 20:30:34.412 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : ==>  Preparing: insert into `accountflow` (actionType, amount, remark, usableAmount, freezedAmount, tradeTime, accountId) values (?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.413 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : ==> Parameters: 3(Integer), 1200.0000(BigDecimal), 投资成功:1200.0000元(String), 0.0000(BigDecimal), 0.0000(BigDecimal), 2018-01-30 20:30:34.412(Timestamp), 4(Long)
+2018-01-30 20:30:34.415 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : <==    Updates: 1
+2018-01-30 20:30:34.416 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : ==>  Preparing: insert into `accountflow` (actionType, amount, remark, usableAmount, freezedAmount, tradeTime, accountId) values (?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.417 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : ==> Parameters: 3(Integer), 600.0000(BigDecimal), 投资成功:600.0000元(String), 0.0000(BigDecimal), 0.0000(BigDecimal), 2018-01-30 20:30:34.415(Timestamp), 3(Long)
+2018-01-30 20:30:34.418 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.AccountFlowMapper.insert     : <==    Updates: 1
+2018-01-30 20:30:34.429 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentschedule` (deadLine, payDate, totalAmount, principal, interest, monthIndex, state, bidRequestType, returnType, bidRequestId, borrowUser_id, bidRequestTitle) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.430 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 2018-02-26 22:16:16.0(Timestamp), null, 517.6451(BigDecimal), 0.0000(BigDecimal), 517.6451(BigDecimal), 1(Integer), 0(Integer), 0(Integer), 0(Integer), 1(Long), 1(Long), 借钱(String)
+2018-01-30 20:30:34.433 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.440 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.442 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 1(Long), 207.0580(BigDecimal), 0.0000(BigDecimal), 207.0580(BigDecimal), 1(Integer), 2018-02-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 1(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.445 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.445 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.446 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 2(Long), 207.0580(BigDecimal), 0.0000(BigDecimal), 207.0580(BigDecimal), 1(Integer), 2018-02-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 1(Long), 1(Long), 4(Long)
+2018-01-30 20:30:34.447 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.447 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.449 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 600.0000(BigDecimal), 8(Long), 517.6451(BigDecimal), 0.0000(BigDecimal), 517.6451(BigDecimal), 1(Integer), 2018-02-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 1(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.450 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.451 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentschedule` (deadLine, payDate, totalAmount, principal, interest, monthIndex, state, bidRequestType, returnType, bidRequestId, borrowUser_id, bidRequestTitle) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.452 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 2018-03-26 22:16:16.0(Timestamp), null, 517.6451(BigDecimal), 0.0000(BigDecimal), 517.6451(BigDecimal), 2(Integer), 0(Integer), 0(Integer), 0(Integer), 1(Long), 1(Long), 借钱(String)
+2018-01-30 20:30:34.453 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.454 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.457 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 1(Long), 207.0580(BigDecimal), 0.0000(BigDecimal), 207.0580(BigDecimal), 2(Integer), 2018-03-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 2(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.458 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.458 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.459 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 2(Long), 207.0580(BigDecimal), 0.0000(BigDecimal), 207.0580(BigDecimal), 2(Integer), 2018-03-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 2(Long), 1(Long), 4(Long)
+2018-01-30 20:30:34.460 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.461 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.462 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 600.0000(BigDecimal), 8(Long), 517.6451(BigDecimal), 0.0000(BigDecimal), 517.6451(BigDecimal), 2(Integer), 2018-03-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 2(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.463 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.464 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentschedule` (deadLine, payDate, totalAmount, principal, interest, monthIndex, state, bidRequestType, returnType, bidRequestId, borrowUser_id, bidRequestTitle) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.465 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 2018-04-26 22:16:16.0(Timestamp), null, 517.6451(BigDecimal), 0.0000(BigDecimal), 517.6451(BigDecimal), 3(Integer), 0(Integer), 0(Integer), 0(Integer), 1(Long), 1(Long), 借钱(String)
+2018-01-30 20:30:34.466 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.467 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.468 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 1(Long), 207.0580(BigDecimal), 0.0000(BigDecimal), 207.0580(BigDecimal), 3(Integer), 2018-04-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 3(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.469 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.469 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.471 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 2(Long), 207.0580(BigDecimal), 0.0000(BigDecimal), 207.0580(BigDecimal), 3(Integer), 2018-04-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 3(Long), 1(Long), 4(Long)
+2018-01-30 20:30:34.473 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.473 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.475 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 600.0000(BigDecimal), 8(Long), 517.6451(BigDecimal), 0.0000(BigDecimal), 517.6451(BigDecimal), 3(Integer), 2018-04-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 3(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.476 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.477 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentschedule` (deadLine, payDate, totalAmount, principal, interest, monthIndex, state, bidRequestType, returnType, bidRequestId, borrowUser_id, bidRequestTitle) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.478 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 2018-05-26 22:16:16.0(Timestamp), null, 517.6451(BigDecimal), 0.0000(BigDecimal), 517.6451(BigDecimal), 4(Integer), 0(Integer), 0(Integer), 0(Integer), 1(Long), 1(Long), 借钱(String)
+2018-01-30 20:30:34.479 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.480 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.482 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 1(Long), 207.0580(BigDecimal), 0.0000(BigDecimal), 207.0580(BigDecimal), 4(Integer), 2018-05-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 4(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.483 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.483 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.484 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 2(Long), 207.0580(BigDecimal), 0.0000(BigDecimal), 207.0580(BigDecimal), 4(Integer), 2018-05-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 4(Long), 1(Long), 4(Long)
+2018-01-30 20:30:34.485 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.485 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.487 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 600.0000(BigDecimal), 8(Long), 517.6451(BigDecimal), 0.0000(BigDecimal), 517.6451(BigDecimal), 4(Integer), 2018-05-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 4(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.488 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.489 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentschedule` (deadLine, payDate, totalAmount, principal, interest, monthIndex, state, bidRequestType, returnType, bidRequestId, borrowUser_id, bidRequestTitle) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.489 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 2018-06-26 22:16:16.0(Timestamp), null, 517.6451(BigDecimal), 0.0000(BigDecimal), 517.6451(BigDecimal), 5(Integer), 0(Integer), 0(Integer), 0(Integer), 1(Long), 1(Long), 借钱(String)
+2018-01-30 20:30:34.490 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.491 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.492 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 1(Long), 207.0580(BigDecimal), 0.0000(BigDecimal), 207.0580(BigDecimal), 5(Integer), 2018-06-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 5(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.493 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.494 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.495 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 2(Long), 207.0580(BigDecimal), 0.0000(BigDecimal), 207.0580(BigDecimal), 5(Integer), 2018-06-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 5(Long), 1(Long), 4(Long)
+2018-01-30 20:30:34.496 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.496 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.497 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 600.0000(BigDecimal), 8(Long), 517.6451(BigDecimal), 0.0000(BigDecimal), 517.6451(BigDecimal), 5(Integer), 2018-06-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 5(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.498 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.498 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentschedule` (deadLine, payDate, totalAmount, principal, interest, monthIndex, state, bidRequestType, returnType, bidRequestId, borrowUser_id, bidRequestTitle) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.499 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 2018-07-26 22:16:16.0(Timestamp), null, 3411.7745(BigDecimal), 3000.0000(BigDecimal), 411.7745(BigDecimal), 6(Integer), 0(Integer), 0(Integer), 0(Integer), 1(Long), 1(Long), 借钱(String)
+2018-01-30 20:30:34.500 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.501 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.505 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 1(Long), 1364.7098(BigDecimal), 1200.0000(BigDecimal), 164.7098(BigDecimal), 6(Integer), 2018-07-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 6(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.506 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.507 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.508 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 1200.0000(BigDecimal), 2(Long), 1364.7098(BigDecimal), 1200.0000(BigDecimal), 164.7098(BigDecimal), 6(Integer), 2018-07-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 6(Long), 1(Long), 4(Long)
+2018-01-30 20:30:34.509 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.509 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==>  Preparing: insert into `paymentscheduledetail` (bidAmount, bidId, totalAmount, principal, interest, monthIndex, deadLine, bidRequestId, payDate, returnType, paymentScheduleId, borrowUser_id, investorId_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2018-01-30 20:30:34.510 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : ==> Parameters: 600.0000(BigDecimal), 8(Long), -1388.2255(BigDecimal), 600.0000(BigDecimal), -1988.2255(BigDecimal), 6(Integer), 2018-07-26 22:16:16.0(Timestamp), 1(Long), null, 0(Integer), 6(Long), 1(Long), 3(Long)
+2018-01-30 20:30:34.512 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.P.insert                     : <==    Updates: 1
+2018-01-30 20:30:34.512 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.updateByPrimaryKey         : ==>  Preparing: update `account` set tradePassword = ?, usableAmount = ?, freezedAmount = ?, borrowLimit = ?, version = version + 1, unReceiveInterest = ?, unReceivePrincipal = ?, unReturnAmount = ?, remainBorrowLimit = ? where id = ? and version = ?
+2018-01-30 20:30:34.513 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.updateByPrimaryKey         : ==> Parameters: null, 10000.0000(BigDecimal), 0.0000(BigDecimal), 5000.0000(BigDecimal), 1799.9998(BigDecimal), 1800.0000(BigDecimal), 0.0000(BigDecimal), 5000.0000(BigDecimal), 3(Long), 3(Integer)
+2018-01-30 20:30:34.514 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.updateByPrimaryKey         : <==    Updates: 1
+2018-01-30 20:30:34.514 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.updateByPrimaryKey         : ==>  Preparing: update `account` set tradePassword = ?, usableAmount = ?, freezedAmount = ?, borrowLimit = ?, version = version + 1, unReceiveInterest = ?, unReceivePrincipal = ?, unReturnAmount = ?, remainBorrowLimit = ? where id = ? and version = ?
+2018-01-30 20:30:34.515 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.updateByPrimaryKey         : ==> Parameters: null, 10000.0000(BigDecimal), 0.0000(BigDecimal), 5000.0000(BigDecimal), 1199.9998(BigDecimal), 1200.0000(BigDecimal), 0.0000(BigDecimal), 5000.0000(BigDecimal), 4(Long), 2(Integer)
+2018-01-30 20:30:34.516 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.A.updateByPrimaryKey         : <==    Updates: 1
+2018-01-30 20:30:34.516 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.B.updateByPrimaryKey         : ==>  Preparing: update `bidrequest` set version = version + 1, bidRequestType = ?, bidRequestState = ?, bidRequestAmount = ?, currentRate = ?, monthes2Return = ?, bidCount = ?, totalRewardAmount = ?, currentSum = ?, title = ?, description = ?, note = ?, disableDate = ?, createUser_id = ?, disableDays = ?, minBidAmount = ?, applyTime = ?, publishTime = ?, returnType = ? where id = ? and version = ?
+2018-01-30 20:30:34.518 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.B.updateByPrimaryKey         : ==> Parameters: 0(Integer), 7(Integer), 3000.0000(BigDecimal), 12.0000(BigDecimal), 6(Integer), 3(Integer), 105.8706(BigDecimal), 3000.0000(BigDecimal), 借钱(String), 最好的钱借给最好信用的我(String), 信用较好(String), 2018-01-31 22:16:16.0(Timestamp), 1(Long), 5(Integer), 50.0000(BigDecimal), 2018-01-26 19:17:48.0(Timestamp), 2018-01-26 22:16:16.0(Timestamp), 0(Integer), 1(Long), 5(Integer)
+2018-01-30 20:30:34.519 DEBUG 19332 --- [nio-8088-exec-5] c._.k.p.b.m.B.updateByPrimaryKey         : <==    Updates: 1
+2018-01-30 20:30:36.315 DEBUG 19332 --- [nio-8088-exec-7] c._.k.p.b.m.B.queryPage_COUNT            : ==>  Preparing: SELECT count(0) FROM `bidrequest` br JOIN logininfo cu ON br.createUser_id = cu.id WHERE br.bidRequestState = ?
+2018-01-30 20:30:36.315 DEBUG 19332 --- [nio-8088-exec-7] c._.k.p.b.m.B.queryPage_COUNT            : ==> Parameters: 5(Integer)
+2018-01-30 20:30:36.317 DEBUG 19332 --- [nio-8088-exec-7] c._.k.p.b.m.B.queryPage_COUNT            : <==      Total: 1
+
+

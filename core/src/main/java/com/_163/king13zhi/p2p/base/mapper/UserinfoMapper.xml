@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com._163.king13zhi.p2p.base.mapper.UserinfoMapper">
+	<resultMap id="BaseResultMap" type="com._163.king13zhi.p2p.base.domain.Userinfo">
+		<id column="id" property="id"/>
+		<result column="version" property="version"/>
+		<result column="bitState" property="bitState"/>
+		<result column="realName" property="realName"/>
+		<result column="idNumber" property="idNumber"/>
+		<result column="score" property="score"/>
+		<result column="realAuthId" property="realAuthId"/>
+		<result column="phoneNumber" property="phoneNumber"/>
+		<result column="email" property="email"/>
+
+		<association property="educationBackground" column="incomeGrade_id"
+					 javaType="com._163.king13zhi.p2p.base.domain.Systemdictionaryitem"
+					 select="com._163.king13zhi.p2p.base.mapper.SystemDictionaryItemMapper.selectByPrimaryKey"/>
+
+		<association property="incomeGrade" column="marriage_id"
+					 javaType="com._163.king13zhi.p2p.base.domain.Systemdictionaryitem"
+					 select="com._163.king13zhi.p2p.base.mapper.SystemDictionaryItemMapper.selectByPrimaryKey"/>
+
+		<association property="marriage" column="kidCount_id"
+					 javaType="com._163.king13zhi.p2p.base.domain.Systemdictionaryitem"
+					 select="com._163.king13zhi.p2p.base.mapper.SystemDictionaryItemMapper.selectByPrimaryKey"/>
+
+		<association property="kidCount" column="educationBackground_id"
+					 javaType="com._163.king13zhi.p2p.base.domain.Systemdictionaryitem"
+					 select="com._163.king13zhi.p2p.base.mapper.SystemDictionaryItemMapper.selectByPrimaryKey"/>
+
+		<association property="houseCondition" column="houseCondition_id"
+					 javaType="com._163.king13zhi.p2p.base.domain.Systemdictionaryitem"
+					 select="com._163.king13zhi.p2p.base.mapper.SystemDictionaryItemMapper.selectByPrimaryKey"/>
+	</resultMap>
+
+	<!--通过登录的id,其它的都不-->
+	<insert id="insert">
+		insert into `userinfo` (id,version, bitState, realName,
+		idNumber, phoneNumber, email,score,realAuthId,
+		incomeGrade_id, marriage_id, kidCount_id,
+		educationBackground_id, houseCondition_id
+		)
+		values (#{id},0, #{bitState}, #{realName},#{score},
+		#{idNumber}, #{phoneNumber}, #{email},#{realAuthId}
+		#{incomeGrade.id}, #{marriage.id}, #{kidCount.id},
+		#{educationBackground.id}, #{houseCondition.id}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey">
+		update `userinfo`
+		set version = version + 1,
+		bitState = #{bitState},
+		realName = #{realName},
+		score=#{score},
+		idNumber = #{idNumber},
+		phoneNumber = #{phoneNumber},
+		email = #{email},
+		incomeGrade_id = #{incomeGrade.id},
+		marriage_id = #{marriage.id},
+		realAuthId = #{realAuthId},
+		kidCount_id = #{kidCount.id},
+		educationBackground_id = #{educationBackground.id},
+		houseCondition_id = #{houseCondition.id}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		select id, version, bitState, realName, idNumber, phoneNumber, score,email, incomeGrade_id,
+		marriage_id, kidCount_id, educationBackground_id, houseCondition_id,realAuthId
+		from `userinfo`
+		where id = #{id}
+	</select>
+
+</mapper>
