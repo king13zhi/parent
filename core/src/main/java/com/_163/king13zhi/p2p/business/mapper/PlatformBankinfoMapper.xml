@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com._163.king13zhi.p2p.business.mapper.PlatformBankinfoMapper" >
+  <resultMap id="BaseResultMap" type="com._163.king13zhi.p2p.business.domain.PlatformBankinfo" >
+    <id column="id" property="id" />
+    <result column="bankName" property="bankName" />
+    <result column="accountNumber" property="accountNumber" />
+    <result column="accountName" property="accountName" />
+    <result column="bankForkname" property="bankForkname" />
+  </resultMap>
+
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="id" >
+    insert into `platformbankinfo` (bankName, accountNumber, accountName, bankForkname)
+    values (#{bankName}, #{accountNumber}, #{accountName}, #{bankForkname})
+  </insert>
+  <update id="updateByPrimaryKey"  >
+    update `platformbankinfo`
+    set bankName = #{bankName},
+      accountNumber = #{accountNumber},
+      accountName = #{accountName},
+      bankForkname = #{bankForkname}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap"  >
+    select id, bankName, accountNumber, accountName, bankForkname
+    from `platformbankinfo`
+    where id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, bankName, accountNumber, accountName, bankForkname
+    from `platformbankinfo`
+  </select>
+
+	<sql id="codition_sql">
+		<where></where>
+	</sql>
+
+	<select id="queryPage" resultMap="BaseResultMap">
+		select id, bankName, accountNumber, accountName, bankForkname
+		from `platformbankinfo`
+		<include refid="codition_sql"/>
+	</select>
+</mapper>

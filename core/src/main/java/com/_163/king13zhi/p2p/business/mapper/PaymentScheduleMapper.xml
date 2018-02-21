@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com._163.king13zhi.p2p.business.mapper.PaymentScheduleMapper">
+	<resultMap id="BaseResultMap" type="com._163.king13zhi.p2p.business.domain.PaymentSchedule">
+		<id column="id" property="id"/>
+		<result column="deadLine" property="deadLine"/>
+		<result column="payDate" property="payDate"/>
+		<result column="totalAmount" property="totalAmount"/>
+		<result column="principal" property="principal"/>
+		<result column="interest" property="interest"/>
+		<result column="monthIndex" property="monthIndex"/>
+		<result column="state" property="state"/>
+		<result column="bidRequestType" property="bidRequestType"/>
+		<result column="returnType" property="returnType"/>
+		<result column="bidRequestId" property="bidRequestId"/>
+		<result column="bidRequestTitle" property="bidRequestTitle"/>
+
+		<association property="borrowUser" javaType="com._163.king13zhi.p2p.base.domain.Logininfo" columnPrefix="bu_">
+			<id column="id" property="id"/>
+			<result column="username" property="username"/>
+		</association>
+
+		<collection property="details" ofType="com._163.king13zhi.p2p.business.domain.PaymentScheduleDetail" column="id"
+					select="com._163.king13zhi.p2p.business.mapper.PaymentScheduleDetailMapper.selectByPaymentScheduleId"/>
+	</resultMap>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into `paymentschedule` (deadLine, payDate, totalAmount, principal, interest, monthIndex,
+		state, bidRequestType, returnType, bidRequestId, borrowUser_id,
+		bidRequestTitle)
+		values (#{deadLine}, #{payDate}, #{totalAmount}, #{principal}, #{interest}, #{monthIndex},
+		#{state}, #{bidRequestType}, #{returnType}, #{bidRequestId}, #{borrowUser.id},
+		#{bidRequestTitle})
+	</insert>
+
+	<update id="updateByPrimaryKey">
+		update `paymentschedule`
+		set deadLine = #{deadLine},
+		payDate = #{payDate},
+		totalAmount = #{totalAmount},
+		principal = #{principal},
+		interest = #{interest},
+		monthIndex = #{monthIndex},
+		state = #{state},
+		bidRequestType = #{bidRequestType},
+		returnType = #{returnType},
+		bidRequestId = #{bidRequestId},
+
+		bidRequestTitle = #{bidRequestTitle}
+		<if test="borrowUser.id != null">
+			, borrowUser_id = #{borrowUser.id}
+		</if>
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		select pc.id, pc.deadLine, pc.payDate, pc.totalAmount, pc.principal, pc.interest, pc.monthIndex, pc.state,
+		pc.bidRequestType, pc.returnType, pc.bidRequestId, pc.borrowUser_id, pc.bidRequestTitle,
+		bu.id bu_id ,bu.username bu_username
+		from `paymentschedule` pc join logininfo bu on bu.id = pc.borrowUser_id
+		where pc.id = #{id}
+	</select>
+
+	<sql id="condition_sql">
+		<where>
+			<if test="userId != null">
+				and pc.borrowUser_id = #{userId}
+			</if>
+		</where>
+	</sql>
+
+	<select id="pagePage" resultMap="BaseResultMap">
+		select pc.id, pc.deadLine, pc.payDate, pc.totalAmount, pc.principal, pc.interest, pc.monthIndex, pc.state,
+		pc.bidRequestType, pc.returnType, pc.bidRequestId, pc.borrowUser_id, pc.bidRequestTitle,
+		bu.id bu_id ,bu.username bu_username
+		from `paymentschedule` pc join logininfo bu on bu.id = pc.borrowUser_id
+		<include refid="condition_sql"/>
+	</select>
+
+	<select id="queryByBidRequestId" resultMap="BaseResultMap">
+		select pc.id, pc.deadLine, pc.payDate, pc.totalAmount, pc.principal, pc.interest, pc.monthIndex, pc.state,
+		pc.bidRequestType, pc.returnType, pc.bidRequestId, pc.borrowUser_id, pc.bidRequestTitle,
+		bu.id bu_id ,bu.username bu_username
+		from `paymentschedule` pc join logininfo bu on bu.id = pc.borrowUser_id
+		where pc.bidRequestId = #{bidRequestId}
+	</select>
+</mapper>

@@ -1,4 +1,3 @@
-/*
 package com._163.king13zhi.p2p.base.util;
 
 import com._163.king13zhi.p2p.base.domain.Logininfo;
@@ -8,11 +7,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-*/
 /**
  * Created by kingdan on 2018/1/18.
- *//*
-
+ */
 
 //当前登录用户session工具类
 public class UserContext {
@@ -51,4 +48,3 @@ public class UserContext {
 		return (VerifyCodeVo) getRequest().getSession().getAttribute(VERIFYCODE_IN_SESSION);
 	}
 }
-*/

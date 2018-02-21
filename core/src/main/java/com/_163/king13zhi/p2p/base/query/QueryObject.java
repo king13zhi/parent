@@ -4,9 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Created by kingdan on 2018/2/8.
+ * Created by kingdan on 2018/1/20.
  */
-@Setter@Getter
+
+/**
+ * 统一用户查询参数封装
+ */
+@Setter
+@Getter
 public class QueryObject {
 	private Integer currentPage = 1;
 	private Integer pageSize = 4;

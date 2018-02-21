@@ -7,7 +7,7 @@ import lombok.Setter;
  * Created by kingdan on 2018/2/8.
  */
 @Setter@Getter
-public class SystemMenuQueryObject extends QueryObject{
+public class SystemMenuQueryObject extends QueryObject {
 	private Long parentId;
 }
 

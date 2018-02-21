@@ -26,18 +26,18 @@ public class Userinfo extends BaseDomain {
 
 	//返回手机绑定的状态
 	public boolean getHasBindPhone() {
-		return BitStatesUtils.hasState(this.bitState, BitStatesUtils.OP_BIND_PHONE);
+		return BitStatesUtils.hasState(this.bitState,BitStatesUtils.OP_BIND_PHONE);
 	}
 
 	//返回基本资料认证的状态
-	public boolean getIsBasicInfo() {return BitStatesUtils.hasState(this.bitState, BitStatesUtils.OP_BASIC_INFO);}
+	public boolean getIsBasicInfo() {return BitStatesUtils.hasState(this.bitState,BitStatesUtils.OP_BASIC_INFO);}
 
 	//返回是否实名认证的状态
-	public boolean getIsRealAuth() {return BitStatesUtils.hasState(this.bitState, BitStatesUtils.OP_REAL_AUTH);}
+	public boolean getIsRealAuth() {return BitStatesUtils.hasState(this.bitState,BitStatesUtils.OP_REAL_AUTH);}
 
 	//返回视频是否认证的状态
 	public boolean getIsVedioAuth() {
-		return BitStatesUtils.hasState(this.bitState, BitStatesUtils.OP_VEDIO_AUTH);
+		return BitStatesUtils.hasState(this.bitState,BitStatesUtils.OP_VEDIO_AUTH);
 	}
 
 	//手机验证后改变状态码(基本都是通用了的)
@@ -47,12 +47,12 @@ public class Userinfo extends BaseDomain {
 
 	//返回邮箱绑定状态
 	public boolean getHasBindEmail(){
-		return BitStatesUtils.hasState(this.bitState, BitStatesUtils.OP_BIND_EMAIL);
+		return BitStatesUtils.hasState(this.bitState,BitStatesUtils.OP_BIND_EMAIL);
 	}
 
 	//返回邮箱绑定状态
 	public boolean getHasBidRequestProcess(){
-		return BitStatesUtils.hasState(this.bitState, BitStatesUtils.OP_HAS_BIDREQUEST_PROCESS);
+		return BitStatesUtils.hasState(this.bitState,BitStatesUtils.OP_HAS_BIDREQUEST_PROCESS);
 	}
 
 	//移除状态码

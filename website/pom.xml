@@ -8,21 +8,32 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>website</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>website</name>
 	<url>http://maven.apache.org</url>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
 	<dependencies>
+		<!--web连接的包-->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!--freemarker的包-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
+		<!--????什么用的包?-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+		<!--core项目想在相当于一个jar包,直接引用使用-->
+		<dependency>
+			<groupId>com._163.king13zhi</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 </project>

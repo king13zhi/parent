@@ -1,15 +1,15 @@
 package com._163.king13zhi.p2p;
 
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
+/**
+ * Created by kingdan on 2018/1/17.
+ */
 @Configuration  //因为不被访问所以用Configuration即可
 @EnableAutoConfiguration
-@SpringBootApplication
 @ComponentScan
 @PropertySources({
 		@PropertySource("classpath:application-core.properties"),
@@ -22,9 +22,5 @@ public class CoreConfig {
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(){
 		return new PropertySourcesPlaceholderConfigurer();
-	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(CoreConfig.class, args);
 	}
 }
